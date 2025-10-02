@@ -2,6 +2,10 @@
 #SingleInstance
 
 
+; Force enable NumLock, pressing NumLock key does nothing!
+Persistent
+SetNumLockState("AlwaysOn")
+
 
 ; ------------
 ; Introduction
@@ -85,18 +89,39 @@ LCtrl & W::Send "^{Backspace}"
 Alt & Left::Send "^{Left}"
 Alt & Right::Send "^{Right}"
 
+; Arrows
+
+RCtrl & Up:: Send "{Home}"
+RCtrl & Down:: Send "{End}"
+
 
 
 ; ------------------
 ; App-specific stuff
 ; ------------------
 
-; "Terminal".
+; ----------
+; "Terminal"
+; ----------
+
 ; Operations below must be binded to Alt+* keys in Terminal app.
 #HotIf WinActive("Terminal")
 
 RCtrl & C::Send("!c")
+RCtrl & D::Send("!d")
 RCtrl & W::Send("!w")
 LCtrl & W::Send("!{Backspace}")
+
+#HotIf
+
+
+; ----------------
+; "Android Studio"
+; ----------------
+
+; Operations below must be binded to Alt+* keys in Terminal app.
+#HotIf WinActive("timers_flutter")
+
+;; RCtrl & R::Send("+{F10}")
 
 #HotIf
