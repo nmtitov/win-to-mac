@@ -9,7 +9,33 @@ Physical keys are remapped at scancode level via **KeyTweak** (registry):
 2. Left Win → Left Alt (Option)
 3. Left Alt → Right Control (used as "Cmd" in AHK)
 
-AHK then maps RCtrl-based combos to Cmd-like behavior (Cmd+Q → Alt+F4, Cmd+A → Ctrl+A, etc.) and LCtrl-based combos to terminal-style Emacs bindings (Ctrl+A → Home, Ctrl+E → End, etc.).
+AHK then maps:
+- **RCtrl (Cmd)** → full set of Cmd shortcuts (A–Z, arrows, backspace) mapped to Ctrl equivalents
+- **LCtrl (physical CapsLock)** → Emacs-style bindings (Ctrl+A → Home, Ctrl+E → End, etc.)
+- **Alt (physical LWin → LAlt)** → Option key (word navigation, word deletion)
+
+### Why every Cmd+Key needs explicit mapping
+
+When a key is used as prefix in `&` combos (e.g., `RCtrl & A`), AHK disables its native modifier function. This means RCtrl **cannot** act as a normal Ctrl modifier for unmapped keys. Pressing RCtrl+Key for a key NOT listed in the script will just type the key without Ctrl. Every common Cmd shortcut must be explicitly listed.
+
+### Terminal section
+
+Terminal intercepts Ctrl+Key for shell signals (Ctrl+C = SIGINT, Ctrl+Z = SIGTSTP). The `#HotIf WinActive("ahk_exe WindowsTerminal.exe")` section overrides global Cmd shortcuts to send Alt+Key combos instead. These Alt+Key combos are bound to Terminal actions in the Windows Terminal `settings.json` keybindings.
+
+**Terminal keybindings required** (in `settings.json`):
+
+| Alt+Key | Terminal Action ID | Purpose |
+|---------|-------------------|---------|
+| alt+c | Terminal.CopyToClipboard | Copy |
+| alt+d | Terminal.ClosePane | Close pane |
+| alt+w | Terminal.CloseTab | Close tab |
+| alt+t | Terminal.DuplicateTab | New tab (same profile/dir) |
+| alt+n | Terminal.OpenNewWindow | New window |
+| alt+f | Terminal.FindText | Find/search |
+
+Shell-native shortcuts (no Terminal binding needed):
+- Cmd+K → Ctrl+L (clear screen)
+- Cmd+Backspace → Ctrl+U (kill line backward)
 
 ## Performance — critical lessons
 

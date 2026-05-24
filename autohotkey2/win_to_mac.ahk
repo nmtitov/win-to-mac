@@ -22,7 +22,7 @@ SetNumLockState("AlwaysOn")
 ; <+ = LShift
 ; >+ RShift
 
-; "&" syntax doesn't support 3 keys. The codes from above should be used in in this case.
+; "&" syntax doesn't support 3 keys. The codes from above should be used in this case.
 
 ; This script requires some keys to be remapped in "KeyTweak" app.
 ; 1. Remap "Caps Lock" to "Left Control".
@@ -77,24 +77,57 @@ RCtrl & Q::Send "!{F4}"
 >^+sc01A::Send("^+{Tab}")
 >^+sc01B::Send("^{Tab}")
 
-; Text editing.
+; Standard Cmd shortcuts → Ctrl equivalents.
+; RCtrl loses its native modifier function when used in & combos,
+; so every Cmd+Key must be mapped explicitly.
 RCtrl & A::Send "^a"
+RCtrl & B::Send "^b"
+RCtrl & C::Send "^c"
+RCtrl & D::Send "^d"
+RCtrl & F::Send "^f"
+RCtrl & I::Send "^i"
+RCtrl & L::Send "^l"
+RCtrl & N::Send "^n"
+RCtrl & O::Send "^o"
+RCtrl & P::Send "^p"
+RCtrl & R::Send "^r"
+RCtrl & S::Send "^s"
+RCtrl & T::Send "^t"
+RCtrl & U::Send "^u"
+RCtrl & V::Send "^v"
+RCtrl & W::Send "^w"
+RCtrl & X::Send "^x"
+RCtrl & Z::Send "^z"
 
+; Cmd+Shift shortcuts.
+>^+Z::Send "^y"
+>^+N::Send "^+n"
+>^+T::Send "^+t"
+>^+F::Send "^+f"
+>^+P::Send "^+p"
+>^+S::Send "^+s"
+
+; Emacs-style editing (LCtrl = physical CapsLock).
 LCtrl & A::Send "{Home}"
 LCtrl & E::Send "{End}"
 LCtrl & P::Send "{Up}"
 LCtrl & N::Send "{Down}"
-
 LCtrl & D::Send "{Delete}"
 LCtrl & W::Send "{LCtrl up}^{Backspace}"
 
+; Option+Arrow / Option+Backspace → word navigation and deletion.
 Alt & Left::Send "^{Left}"
 Alt & Right::Send "^{Right}"
+Alt & Backspace::Send "^{Backspace}"
 
-; Arrows
+; Cmd+Arrow → line/document navigation.
+RCtrl & Left::Send "{Home}"
+RCtrl & Right::Send "{End}"
+RCtrl & Up::Send "^{Home}"
+RCtrl & Down::Send "^{End}"
 
-RCtrl & Up:: Send "{Home}"
-RCtrl & Down:: Send "{End}"
+; Cmd+Backspace → delete to beginning of line.
+RCtrl & Backspace::Send "+{Home}{Delete}"
 
 
 
@@ -106,13 +139,20 @@ RCtrl & Down:: Send "{End}"
 ; "Terminal"
 ; ----------
 
-; Operations below must be binded to Alt+* keys in Terminal app.
+; Terminal intercepts Ctrl+Key for shell signals (Ctrl+C = SIGINT, etc.).
+; These overrides send Alt+Key combos that are bound in Terminal settings,
+; or use shell-native shortcuts (Ctrl+L for clear, Ctrl+U for kill line).
 #HotIf WinActive("ahk_exe WindowsTerminal.exe")
 
 RCtrl & C::Send("!c")
 RCtrl & D::Send("!d")
-RCtrl & W::Send("!w")
+RCtrl & W::Send("{Shift up}!w")
 LCtrl & W::Send("{LCtrl up}!{Backspace}")
+RCtrl & T::Send("!t")
+RCtrl & N::Send("!n")
+RCtrl & F::Send("!f")
+RCtrl & K::Send("^l")
+RCtrl & Backspace::Send("^u")
 
 #HotIf
 
@@ -121,7 +161,6 @@ LCtrl & W::Send("{LCtrl up}!{Backspace}")
 ; "Android Studio"
 ; ----------------
 
-; Operations below must be binded to Alt+* keys in Terminal app.
 #HotIf WinActive("timers_flutter")
 
 ;; RCtrl & R::Send("+{F10}")
