@@ -84,7 +84,7 @@ LCtrl & P::Send "{Up}"
 LCtrl & N::Send "{Down}"
 
 LCtrl & D::Send "{Delete}"
-LCtrl & W::Send "^{Backspace}"
+LCtrl & W::Send "{LCtrl up}^{Backspace}"
 
 Alt & Left::Send "^{Left}"
 Alt & Right::Send "^{Right}"
@@ -105,12 +105,12 @@ RCtrl & Down:: Send "{End}"
 ; ----------
 
 ; Operations below must be binded to Alt+* keys in Terminal app.
-#HotIf WinActive("Terminal")
+#HotIf WinActive("ahk_exe WindowsTerminal.exe")
 
 RCtrl & C::Send("!c")
 RCtrl & D::Send("!d")
 RCtrl & W::Send("!w")
-LCtrl & W::Send("!{Backspace}")
+LCtrl & W::Send("{LCtrl up}!{Backspace}")
 
 #HotIf
 
