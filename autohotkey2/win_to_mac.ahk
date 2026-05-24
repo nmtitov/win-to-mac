@@ -33,9 +33,11 @@ SetNumLockState("AlwaysOn")
 ; CapsLock::LCtrl
 
 
-Control & Esc::vkE8 ; Disable "Start menu" from Ctrl+Esc.
-~LWin::vkE8 ; Disable Start menu from Win Key but keep using Win Key for other shortcuts.
-LAlt & Tab::vkE8 ; Disable "standard" Alt+Tab.
+; Kill Start Menu completely.
+Control & Esc::vkE8
+LWin::return
+RWin::return
+LAlt & Tab::vkE8
 
 
 
@@ -51,7 +53,7 @@ LAlt & Tab::vkE8 ; Disable "standard" Alt+Tab.
 >^Tab:: {
     Send("{Alt down}{Tab}")
     try {
-        KeyWait("RCtrl")
+        KeyWait("RCtrl", "T5")
     }
     Send("{Alt up}")
 }
@@ -59,8 +61,8 @@ LAlt & Tab::vkE8 ; Disable "standard" Alt+Tab.
 >^+Tab:: {
     Send("{Alt down}{Shift down}{Tab}")
     try {
-        KeyWait("RCtrl")
-        KeyWait("Shift")
+        KeyWait("RCtrl", "T5")
+        KeyWait("Shift", "T5")
     }
     Send("{Shift up}{Alt up}")
 }
