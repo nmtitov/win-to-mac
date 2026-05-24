@@ -146,7 +146,7 @@ RCtrl & Backspace::Send "+{Home}{Delete}"
 
 RCtrl & C::Send("!c")
 RCtrl & D::Send("!d")
-RCtrl & W::Send("^+w")
+RCtrl & W::Send("!w")
 LCtrl & W::Send("{LCtrl up}!{Backspace}")
 RCtrl & T::Send("!t")
 RCtrl & N::Send("!n")
