@@ -8,6 +8,7 @@ Physical keys are remapped at scancode level via **KeyTweak** (registry):
 1. Caps Lock → Left Control
 2. Left Win → Left Alt (Option)
 3. Left Alt → Right Control (used as "Cmd" in AHK)
+4. Right Win → Right Control (second "Cmd", like macOS has Cmd on both sides)
 
 AHK then maps:
 - **RCtrl (Cmd)** → full set of Cmd shortcuts (A–Z, arrows, backspace) mapped to Ctrl equivalents
