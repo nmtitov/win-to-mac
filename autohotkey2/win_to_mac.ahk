@@ -1,6 +1,8 @@
 #Requires AutoHotkey v2.0
 #SingleInstance
 
+; Prevent Start Menu from appearing when AHK suppresses Win/Alt key events.
+A_MenuMaskKey := "vkE8"
 
 ; Force enable NumLock, pressing NumLock key does nothing!
 Persistent
@@ -35,8 +37,8 @@ SetNumLockState("AlwaysOn")
 
 ; Kill Start Menu completely.
 Control & Esc::vkE8
-LWin::return
-RWin::return
+LWin::Send("{Blind}{vkE8}")
+RWin::Send("{Blind}{vkE8}")
 LAlt & Tab::vkE8
 
 
