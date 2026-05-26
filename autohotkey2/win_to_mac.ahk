@@ -47,10 +47,6 @@ LAlt & Tab::vkE8
 ; Key Bindings
 ; ------------
 
-; Session
->^<^Q:: Send("#l") ; TODO: nik / doesn't work, must check this.
->^+Q:: Send("#{x}{u}{i}") ; TODO: nik / doesn't work, must check this.
-
 ; "Alt"-"Tab"
 >^Tab:: {
     Send("{Alt down}{Tab}")
@@ -73,7 +69,14 @@ LAlt & Tab::vkE8
 RCtrl & Space::Send "#{Space}"
 
 ; Window management.
-RCtrl & Q::Send "!{F4}"
+RCtrl & Q:: {
+    if GetKeyState("LControl")
+        Send "#l"              ; Cmd+Ctrl+Q → lock screen (TODO: doesn't work)
+    else if GetKeyState("Shift")
+        Send "#{x}{u}{i}"     ; Cmd+Shift+Q → shutdown (TODO: doesn't work)
+    else
+        Send "!{F4}"
+}
 
 ; Tabs cycling.
 >^+sc01A::Send("^+{Tab}")
@@ -86,28 +89,50 @@ RCtrl & A::Send "^a"
 RCtrl & B::Send "^b"
 RCtrl & C::Send "^c"
 RCtrl & D::Send "^d"
-RCtrl & F::Send "^f"
+RCtrl & F:: {
+    if GetKeyState("Shift")
+        Send "^+f"
+    else
+        Send "^f"
+}
 RCtrl & I::Send "^i"
 RCtrl & L::Send "^l"
-RCtrl & N::Send "^n"
+RCtrl & N:: {
+    if GetKeyState("Shift")
+        Send "^+n"
+    else
+        Send "^n"
+}
 RCtrl & O::Send "^o"
-RCtrl & P::Send "^p"
+RCtrl & P:: {
+    if GetKeyState("Shift")
+        Send "^+p"
+    else
+        Send "^p"
+}
 RCtrl & R::Send "^r"
-RCtrl & S::Send "^s"
-RCtrl & T::Send "^t"
+RCtrl & S:: {
+    if GetKeyState("Shift")
+        Send "^+s"
+    else
+        Send "^s"
+}
+RCtrl & T:: {
+    if GetKeyState("Shift")
+        Send "^+t"
+    else
+        Send "^t"
+}
 RCtrl & U::Send "^u"
 RCtrl & V::Send "^v"
 RCtrl & W::Send "^w"
 RCtrl & X::Send "^x"
-RCtrl & Z::Send "^z"
-
-; Cmd+Shift shortcuts.
->^+Z::Send "^y"
->^+N::Send "^+n"
->^+T::Send "^+t"
->^+F::Send "^+f"
->^+P::Send "^+p"
->^+S::Send "^+s"
+RCtrl & Z:: {
+    if GetKeyState("Shift")
+        Send "^y"
+    else
+        Send "^z"
+}
 
 ; Emacs-style editing (LCtrl = physical CapsLock).
 LCtrl & A::Send "{Home}"

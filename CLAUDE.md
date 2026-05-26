@@ -18,6 +18,10 @@ AHK then maps:
 
 When a key is used as prefix in `&` combos (e.g., `RCtrl & A`), AHK disables its native modifier function. This means RCtrl **cannot** act as a normal Ctrl modifier for unmapped keys. Pressing RCtrl+Key for a key NOT listed in the script will just type the key without Ctrl. Every common Cmd shortcut must be explicitly listed.
 
+### Cmd+Shift shortcuts must use GetKeyState, not `>^+`
+
+Because RCtrl is a `&` prefix, `>^+P::` (RCtrl+Shift+P) **never fires** — AHK matches `RCtrl & P` first and ignores Shift. The fix: check `GetKeyState("Shift")` inside the `RCtrl & X` hotkey block. This applies to any key that has both a `RCtrl & X` combo and a Cmd+Shift variant. `>^+` syntax only works for keys that do NOT have a `RCtrl &` combo (e.g., `>^Tab`, `>^+sc01A`).
+
 ### Terminal section
 
 Terminal intercepts Ctrl+Key for shell signals (Ctrl+C = SIGINT, Ctrl+Z = SIGTSTP). The `#HotIf WinActive("ahk_exe WindowsTerminal.exe")` section overrides global Cmd shortcuts to send Alt+Key combos instead. These Alt+Key combos are bound to Terminal actions in the Windows Terminal `settings.json` keybindings.
@@ -63,7 +67,7 @@ Uses `KeyWait("RCtrl", "T5")` with a 5-second timeout. Without timeout, if AHK l
 
 ## Start Menu suppression
 
-`LWin::return` and `RWin::return` suppress both Win keys. Physical LWin is already remapped to LAlt via KeyTweak so `LWin::return` is a safety net. `RWin::return` handles the right Win key if the keyboard has one.
+`A_MenuMaskKey := "vkE8"` prevents Start Menu from appearing when AHK suppresses Win/Alt key events (e.g., during rapid Cmd+Space language switching). `LWin`/`RWin` hotkeys send `{Blind}{vkE8}` instead of `return` because plain `return` doesn't suppress the key-up event on Windows 11. Physical LWin is already remapped to LAlt via KeyTweak so `LWin::` is a safety net. `RWin::` handles the right Win key if the keyboard has one.
 
 These do NOT interfere with `Send("#...")` (Win+Space, Win+L etc.) because AHK's `Send` doesn't re-trigger its own hotkeys.
 
